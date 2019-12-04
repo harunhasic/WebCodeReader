@@ -1,0 +1,176 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title>WebCode Reader</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+  <meta name="theme-color" content="#fafafa">
+  <script type="text/javascript" src="js/vendor/jquery-3.4.1.min.js"></script>
+</head>
+<style >
+  body{
+    margin:0;
+    padding:0;
+  }
+  #toggleBar{
+    width:100%;
+    height:60px;
+    background-color:black;
+    color:white;
+    border-bottom:4px solid palegreen;
+  }
+  #name{
+    font-family: "Arial";
+    font-weight:bold;
+    font-size:1.5em;
+    padding:10px 10px;
+    float:left;
+  }
+  #buttonDiv{
+    float:right;
+    padding:10px 30px 10px 10px;
+    font-family: Arial;
+  }
+  #runButton{
+    font-size:1.7em;
+    border-radius:4px;
+  }
+  #toggles{
+    margin:0 auto;
+    width:189px;
+    list-style:none;
+    font-size:1.2em;
+    border:3px solid palegreen;
+    border-radius:3px;
+    height:35px;
+    padding:0;
+    position:relative;
+    top:7px;
+    font-size:1.2em;
+  }
+  #toggles li{
+    float:left;
+    border-right:1px solid palegreen;
+    padding:5px 2px 2px 4px;
+    text-align:center;
+  }
+  .clear{
+    clear:both;
+  }
+  .codeContainer{
+
+      height:100%;
+    width:50%;
+    float:left;
+    position:relative;
+
+  }
+  .codeContainer textarea{
+    width:100%;
+    height:100%;
+    border:none;
+    border-right:3px solid black;
+    box-sizing:border-box;
+    font-family:monotype;
+    font-size:1.2em;
+    padding:5px;
+
+  }
+  .codeLabel{
+    position:absolute;
+    right:10px;
+    top:10px;
+    font-family: "Arial Black";
+  }
+  #CSSContainer,#JSContainer{
+    display:none;
+  }
+  iframe{
+    height:100%;
+    left:20px;
+    position:relative;
+    border:none;
+  }
+  .selected{
+    background-color: gray;
+  }
+</style>
+<body>
+  <div id="container">
+      <div id="toggleBar">
+          <div id="name">
+              WebCode Reader by Harun Hasic
+
+          </div>
+          <div id="buttonDiv">
+            <button id="runButton">Run</button>
+          </div>
+          <ul id="toggles">
+            <li class="toggle selected">HTML</li>
+            <li class="toggle">CSS</li>
+            <li class="toggle">JS</li>
+            <li class="toggle selected" style="border:none">Result</li>
+          </ul>
+      </div>
+    <div class="clear"></div>
+      <div class="codeContainer" id="HTMLContainer">
+        <div class="codeLabel">HTML</div>
+          <textarea id="htmlCode">Example code</textarea>
+
+      </div>
+    <div class="codeContainer" id="CSSContainer">
+      <div class="codeLabel">CSS</div>
+      <textarea id="cssCode">html{ /* write code in these brackets*/}</textarea>
+
+    </div>
+    <div class="codeContainer" id="JSContainer">
+      <div class="codeLabel">JavaScript</div>
+      <textarea id="jsCode"></textarea>
+
+    </div>
+    <div class="codeContainer" id="ResultContainer">
+      <div class="codeLabel">Result</div>
+          <iframe id="resultFrame"></iframe>
+
+    </div>
+
+
+  </div>
+
+<script>
+    var windowHeight=$(window).height();
+    var toggleBarHeight=$("#toggleBar").height();
+    var codeContainerHeight=windowHeight-toggleBarHeight;
+    $(".codeContainer").height(codeContainerHeight+ "px");
+    $(".toggle").click(function(){
+          $(this).toggleClass("selected");
+          var activeDiv=$(this).html();
+          $("#"+activeDiv+"Container").toggle();
+          var showingDivs=$(".codeContainer").filter(function(){
+            return($(this).css("display")!="none");
+
+
+          }).length;
+          var width=100/showingDivs;
+          $(".codeContainer").width(width+"%");
+    });
+    $("#runButton").click(function(){
+        $("iframe").contents().find("html").html("<style>"+$("#cssCode").val()+"</style>"+$("#htmlCode").val());
+        document.getElementById("resultFrame").contentWindow.eval($("#jsCode").val());
+
+
+    });
+</script>
+
+</body>
+
+</html>
