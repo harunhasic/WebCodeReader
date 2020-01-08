@@ -35,13 +35,17 @@
     padding:10px 10px;
     float:left;
   }
-  #buttonDiv{
+  .buttonDiv{
     float:right;
     padding:10px 30px 10px 10px;
     font-family: Arial;
   }
   #runButton{
     font-size:1.7em;
+    border-radius:4px;
+  }
+  #instructionsButton{
+    font-size:1.5em;
     border-radius:4px;
   }
   #toggles{
@@ -111,7 +115,10 @@
               WebCode Reader by Harun Hasic
 
           </div>
-          <div id="buttonDiv">
+        <div class="buttonDiv">
+          <button id="instructionsButton">Instructions</button>
+        </div>
+          <div class="buttonDiv">
             <button id="runButton">Run</button>
           </div>
           <ul id="toggles">
